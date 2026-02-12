@@ -4,8 +4,8 @@
 //
 // Try to make a tetris like scene
 // blocks is the character
-// use 1,2,3,4 to change bg color scheme
-// 
+// use space to change bg color scheme
+// use 1-7 to switch block type
 
 let blockDrawn = "T";
 let colorScheme = 0;
@@ -21,7 +21,13 @@ function draw() {
   drawGameUI();
 
   //Character
-  yPos = yPos + 50
+  if (yPos >= 800){
+    yPos = 100
+  }
+  else{
+    yPos++
+  }
+
   drawBlock(blockDrawn, xPos, yPos)
 
   //signature
@@ -79,17 +85,51 @@ function drawBlock(blockType, xPos, yPos){
     rect(xPos,yPos, 75, 25);
     rect(xPos,yPos + 12.5, 25, 50);
   }
-
-  if(blockType === "line"){
+  else if(blockType === "Line"){
     fill(99, 224, 255);
     stroke(59, 187, 219);
     rectMode(CENTER)
-    rect(xPos, yPos, 150, 25)
+    rect(xPos, yPos, 150, 25);
+  }
+  else if(blockType === "Square"){
+    fill (250, 224, 25);
+    stroke (235, 216, 75);
+    rectMode (CENTER);
+    rect(xPos,yPos, 50, 50);
+  }
+  else if(blockType === "J"){
+    fill (255, 0, 255);
+    stroke (181, 36, 181);
+    rectMode (CENTER);
+    rect(xPos, yPos, 25, 75);
+    rect(xPos - 12.5, yPos + 32.5, 50,25);
+  }
+  else if(blockType === "L"){
+    fill (247, 140, 10);
+    stroke (207, 132, 41);
+    rectMode (CENTER);
+    rect(xPos, yPos, 25, 75);
+    rect(xPos + 12.5, yPos + 32.5, 50,25);
+  }
+  else if(blockType === "S"){
+    fill (255, 0, 0);
+    stroke (184, 40, 40);
+    rectMode (CENTER);
+    rect(xPos + 12.5, yPos, 50, 25);
+    rect(xPos - 12.5, yPos + 25, 50, 25);
+  }
+  else if(blockType === "Z"){
+    fill (58, 222, 47);
+    stroke (62, 166, 55);
+    rectMode (CENTER);
+    rect(xPos - 12.5, yPos, 50, 25);
+    rect(xPos + 12.5, yPos + 25, 50, 25);
   }
 
 }
 
 function keyPressed(){
+ console.log("test")
   if (keyCode === 32){
     if (colorScheme >= 4) {
         colorScheme = 0
@@ -98,11 +138,34 @@ function keyPressed(){
         colorScheme++
     }
   }
-  if(keyCode === 68){
+  if(keyCode === 68 && xPos <= 375){
     xPos = xPos + 25
   }
-  if(keyCode === 65){
+  else if(keyCode === 65 && xPos >= 225){
     xPos = xPos - 25
   }
 
+  //1 - 7 for blocks
+  if(keyCode === 49){
+    blockDrawn = "T"
+  }
+  else if(keyCode === 50){
+    blockDrawn = "Square"
+  }
+  else if(keyCode === 51){
+    blockDrawn = "Z"
+  }
+  else if(keyCode === 52){
+    blockDrawn = "S"
+  }
+  else if(keyCode === 53){
+    blockDrawn = "L"
+  }
+  else if(keyCode === 54){
+    blockDrawn = "J"
+  }
+  else if(keyCode === 55){
+    blockDrawn = "Line"
+  }
+  
 }
