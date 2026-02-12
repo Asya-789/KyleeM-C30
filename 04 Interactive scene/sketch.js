@@ -21,13 +21,13 @@ function draw() {
   drawGameUI();
 
   //Character
+  //constantly moves player down and reset when at bottom
   if (yPos >= 800){
     yPos = 100
   }
   else{
     yPos++
   }
-
   drawBlock(blockDrawn, xPos, yPos)
 
   //signature
@@ -39,6 +39,8 @@ function draw() {
 }
 
 function drawGameUI(){
+  // sets background to black and white by default
+  // and when space is pressed it changes color scheme
   let bgColor = [46, 46, 46];
   let strokeColor = [255, 255, 255];
 
@@ -68,6 +70,7 @@ function drawGameUI(){
     background(46, 46, 46);
   }
    
+  //adjusts the colors of bg according to chosen color scheme, and draws boxes
   stroke(strokeColor[0], strokeColor[1], strokeColor[2]);
   strokeWeight(5);
   fill(bgColor[0], bgColor[1], bgColor[2])
@@ -77,7 +80,8 @@ function drawGameUI(){
 }
 
 function drawBlock(blockType, xPos, yPos){
-
+  //detects what type of block to draw and where to draw at
+  
   if (blockType === "T"){
     fill(167, 66, 245);
     stroke(192, 110, 255);
@@ -129,7 +133,8 @@ function drawBlock(blockType, xPos, yPos){
 }
 
 function keyPressed(){
- console.log("test")
+  //checks for space to change bg color scheme
+  // a and d to move block left and right
   if (keyCode === 32){
     if (colorScheme >= 4) {
         colorScheme = 0
@@ -138,6 +143,7 @@ function keyPressed(){
         colorScheme++
     }
   }
+  // a and d for movement
   if(keyCode === 68 && xPos <= 375){
     xPos = xPos + 25
   }
