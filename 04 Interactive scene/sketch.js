@@ -35,7 +35,6 @@ function draw() {
   fill(255, 255, 255)
   textSize(20)
   text("Kylee M", 25, 875)
-
 }
 
 function drawGameUI(){
@@ -129,7 +128,6 @@ function drawBlock(blockType, xPos, yPos){
     rect(xPos - 12.5, yPos, 50, 25);
     rect(xPos + 12.5, yPos + 25, 50, 25);
   }
-
 }
 
 function keyPressed(){
@@ -173,5 +171,4 @@ function keyPressed(){
   else if(keyCode === 55){
     blockDrawn = "Line"
   }
-  
 }
