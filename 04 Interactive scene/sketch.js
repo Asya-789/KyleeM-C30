@@ -11,6 +11,7 @@ let blockDrawn = "T";
 let colorScheme = 0;
 let yPos = 100;
 let xPos = 300;
+let dropSpeed = 1;
 
 function setup() {
   createCanvas(600, 900);
@@ -22,19 +23,31 @@ function draw() {
 
   //Character
   //constantly moves player down and reset when at bottom
+  //pressing a mouse button speeds it up
   if (yPos >= 800){
-    yPos = 100
+    yPos = 100;
+  }
+  else if(yPos < 50){
+    yPos = 750;
   }
   else{
-    yPos++
+    yPos += dropSpeed;
   }
-  drawBlock(blockDrawn, xPos, yPos)
+
+  if (mouseButton === LEFT && mouseIsPressed){
+    dropSpeed++;
+  }
+  else if (mouseButton === RIGHT && mouseIsPressed){
+    dropSpeed--;
+  }
+
+  drawBlock(blockDrawn, xPos, yPos);
 
   //signature
   noStroke();
-  fill(255, 255, 255)
-  textSize(20)
-  text("Kylee M", 25, 875)
+  fill(255, 255, 255);
+  textSize(20);
+  text("Kylee M", 25, 875);
 }
 
 function drawGameUI(){
@@ -50,7 +63,7 @@ function drawGameUI(){
   }
   else if(colorScheme === 2){
     bgColor = [145, 44, 67];
-    strokeColor = [230, 16, 65] ;
+    strokeColor = [230, 16, 65];
     background(145, 44, 67);
   }
   else if(colorScheme === 3){
@@ -91,7 +104,7 @@ function drawBlock(blockType, xPos, yPos){
   else if(blockType === "Line"){
     fill(99, 224, 255);
     stroke(59, 187, 219);
-    rectMode(CENTER)
+    rectMode(CENTER);
     rect(xPos, yPos, 150, 25);
   }
   else if(blockType === "Square"){
@@ -135,40 +148,40 @@ function keyPressed(){
   // a and d to move block left and right
   if (keyCode === 32){
     if (colorScheme >= 4) {
-        colorScheme = 0
+        colorScheme = 0;
     }
     else{
-        colorScheme++
+        colorScheme++;
     }
   }
   // a and d for movement
   if(keyCode === 68 && xPos <= 375){
-    xPos = xPos + 25
+    xPos = xPos + 25;
   }
   else if(keyCode === 65 && xPos >= 225){
-    xPos = xPos - 25
+    xPos = xPos - 25;
   }
 
   //1 - 7 for blocks
   if(keyCode === 49){
-    blockDrawn = "T"
+    blockDrawn = "T";
   }
   else if(keyCode === 50){
-    blockDrawn = "Square"
+    blockDrawn = "Square";
   }
   else if(keyCode === 51){
-    blockDrawn = "Z"
+    blockDrawn = "Z";
   }
   else if(keyCode === 52){
-    blockDrawn = "S"
+    blockDrawn = "S";
   }
   else if(keyCode === 53){
-    blockDrawn = "L"
+    blockDrawn = "L";
   }
   else if(keyCode === 54){
-    blockDrawn = "J"
+    blockDrawn = "J";
   }
   else if(keyCode === 55){
-    blockDrawn = "Line"
+    blockDrawn = "Line";
   }
 }
