@@ -6,6 +6,7 @@
 // blocks is the character
 // use space to change bg color scheme
 // use 1-7 to switch block type
+// use lmb and rmb to speed and slow down drop speed
 
 let blockDrawn = "T";
 let colorScheme = 0;
