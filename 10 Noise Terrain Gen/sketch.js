@@ -1,19 +1,21 @@
-// Project Title
-// Your Name
-// Date
+// Noise Terrain generator
+// Kylee
+// March 5 2026
 //
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// up and down arrows to change rectangle width
 
-let rectwidth = 10;
-
+//terrain gen variables
+let rectwidth = 2;
 let noiseY;
 let noiseTime = 1;
 let noiseSpeed = 0.01;
 let noisetSet = 1;
+
+//flag variables
 let highestPointY = 0;
 let highestPointX = 0;
 
+//average variables
 let noiseYArray = [];
 let noiseYAverage = 0;
 
@@ -26,27 +28,30 @@ function setup() {
 function draw() {
   background(0);
   genTerrain();
+  drawFlag();
+  average();
 }
 
 function genTerrain() {
-  //make a terrain that travels from side to side of screen and creates a panning like effect
+  //generates a noise graph to move to the left 
+  noiseYArray = [];
   highestPointY = windowHeight;
-  //basic one 
+
+  //draws a new set of terrain that spans the whole screen 
+  //and shifts starting time over slightly to make it pan
   for (let i = 0; i <= windowWidth; i = i + rectwidth) {
     noiseY = map(noise(noiseTime), 0, 1, 0, windowHeight);
     noiseTime += noiseSpeed;
     rect(i, noiseY, rectwidth, windowHeight);
 
+    //info saved for the flag function
     if (noiseY < highestPointY) {
       highestPointX = i;
       highestPointY = noiseY;
     }
+    //info saved for average function
     noiseYArray.push(noiseY);
   }
-  drawFlag();
-  average();
-  noiseYArray = [];
-  //for panning comment out to turn it off
   noisetSet += 0.1;
   noiseTime = noisetSet;
 }
@@ -61,6 +66,7 @@ function drawFlag() {
 }
 
 function keyPressed() {
+  // changes rectangle width when up and down arrows are clicked
   if (keyCode == 38) {
     rectwidth++;
   }
@@ -69,12 +75,15 @@ function keyPressed() {
   }
 }
 
+
 function average() {
-  for(let i = 0; i <= noiseYArray.length; i++){
-    noiseYAverage = noiseYAverage + noiseYArray[i];
+  //adds all levels of height then divide by length to average out height then
+  //draw a red line showing the average
+  for (let i = 0; i < noiseYArray.length; i++) {
+    noiseYAverage += noiseYArray[i];
   }
   noiseYAverage = noiseYAverage / noiseYArray.length
-  text(noiseYArray.length, 20, 20)
+  text(noiseYAverage, 20, 20)
   fill(255, 0, 0);
   rect(0, noiseYAverage, windowWidth, 5)
   fill(255)
