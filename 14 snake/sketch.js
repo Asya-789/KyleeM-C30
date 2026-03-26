@@ -31,10 +31,8 @@ function renderSnake(){
 }
 
 function move(){
-  if(keyIsDown(LEFT_ARROW)){x -= 4};
-  if(keyIsDown(RIGHT_ARROW)){x += 4};
-  if(keyIsDown(UP_ARROW)){y -= 4};
-  if(keyIsDown(DOWN_ARROW)){y += 4};
+  x = lerp(x, mouseX, 0.05);
+  y = lerp(y, mouseY, 0.05);
 
   posList.splice(0,1);
   posList.push({x:x, y:y, r:frameCount});
