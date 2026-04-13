@@ -8,6 +8,9 @@ let testCar;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   rectMode(CENTER);
+  for(let i = 0; i< 20; i++){
+    cars.push(new vehicle(random(0, width), random(height/2 - 200, height/2 + 200), random(0,1)));
+  }
   testCar = new vehicle(0, 350, 1);
 }
 
@@ -26,6 +29,9 @@ function drawRoad() {
 function draw() {
   drawRoad();
   testCar.action();
+  for(let object of cars){
+    object.action();
+  }
 }
 
 class vehicle {
@@ -87,14 +93,21 @@ class vehicle {
   }
 
   speedUp() {
-    this.speed += 0.5;
+    this.speed += 10;
   }
   speedDown() {
-    this.speed -= 0.5;
+    this.speed -= 10;
   }
 
   action() {
+    let chance = random(0,100);
     this.display();
     this.move();
+    if(chance >= 99){
+      this.speedDown;
+    }
+    else if(chance <= 1){
+      this.speedUp;
+    }
   }
 }
