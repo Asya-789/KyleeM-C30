@@ -9,7 +9,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   rectMode(CENTER);
   for(let i = 0; i< 20; i++){
-    cars.push(new vehicle(random(0, width), random(height/2 - 200, height/2 + 200), random(0,1)));
+    cars.push(new vehicle(random(0, width), random(height/2 - 185, height/2 + 185), random(0,1)));
   }
   testCar = new vehicle(0, 350, 1);
 }
@@ -34,6 +34,16 @@ function draw() {
   }
 }
 
+function mousePressed(){
+  //spawn more cars
+  if(keyIsDown(16)){
+    cars.push(new vehicle(random(0, width), random(height/2 - 185, height/2), random(0,1)));
+  }
+  else {
+    cars.push(new vehicle(random(0, width), random(height/2, height/2 + 185), random(0,1)));
+  }
+}
+
 class vehicle {
   constructor(x, y, type) {
     this.x = x; this.y = y;
@@ -50,7 +60,7 @@ class vehicle {
 
   display() {
     //car
-    if (this.type === 0) {
+    if (this.type <= 0.5) {
       fill(255)
       rect(this.x - 20, this.y,15,45)
       rect(this.x + 20, this.y,15,45)
@@ -59,7 +69,7 @@ class vehicle {
     }
     //truck
     
-    if(this.type === 1){
+    if(this.type > 0.5){
       if(this.direction === 0){
         fill(this.c[0], this.c[1], this.c[2])
         rect(this.x,this.y, 75, 40)
@@ -89,25 +99,28 @@ class vehicle {
   }
 
   changeColor() {
-
+    this.c = [random(0, 255), random(0, 255), random(0, 255)]
   }
 
   speedUp() {
-    this.speed += 10;
+    this.speed += 0.5;
   }
   speedDown() {
-    this.speed -= 10;
+    this.speed -= 0.5;
   }
 
   action() {
     let chance = random(0,100);
     this.display();
     this.move();
-    if(chance >= 99){
-      this.speedDown;
+    if(chance >= 99 && this.speed >= 0.6){
+      this.speedDown();
     }
     else if(chance <= 1){
-      this.speedUp;
+      this.speedUp();
+    }
+    else if(chance >= 49 && chance <= 50){
+      this.changeColor();
     }
   }
 }
