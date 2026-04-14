@@ -1,41 +1,44 @@
-// Cars
+// Cars cars cars
 // Kylee
-// Date
+// April 14
+// shift left + click to spawn cas in top lane, left click to spawn cars in bottom lane
+// space to switch light to red
+
+//instead of having 2 different arrays for cars i have detection built into class to sort into top and bottom lane
 
 let cars = [];
-let testCar;
+let light = false;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   rectMode(CENTER);
   for(let i = 0; i< 20; i++){
+    //spawn 20 cars initially
     cars.push(new vehicle(random(0, width), random(height/2 - 185, height/2 + 185), random(0,1)));
   }
-  testCar = new vehicle(0, 350, 1);
 }
 
 //done
 function drawRoad() {
   background(120);
   fill(25)
-  rect(width / 2, height / 2, width, 400)
-  //lines
+  rect(width / 2, height / 2, width, 400) 
+
   fill(255, 255, 0)
   for (let i = 0; i < width; i += 40) {
-    rect(i, height / 2, 20, 5)
+    rect(i, height / 2, 20, 5)// yellow lines
   }
 }
 
 function draw() {
   drawRoad();
-  testCar.action();
   for(let object of cars){
     object.action();
   }
 }
 
 function mousePressed(){
-  //spawn more cars
+  //spawn more cars when clicked
   if(keyIsDown(16)){
     cars.push(new vehicle(random(0, width), random(height/2 - 185, height/2), random(0,1)));
   }
@@ -85,9 +88,9 @@ class vehicle {
 
   move() {
     if(this.direction === 0){
-      this.x += this.speed
+      this.x += this.speed //moves vehicle forward dependent on speed set
       if(this.x > width){
-        this.x = 0;
+        this.x = 0; // resets position back when end reached
       }
     }
     else{
@@ -109,17 +112,34 @@ class vehicle {
     this.speed -= 0.5;
   }
 
+  lightOn(){
+    //when space is held stops movement
+    if(keyIsDown(32)){
+      light = true;
+      fill(255, 0, 0)
+    }
+    else {
+      light = false;
+      fill(0, 255, 0)
+    }
+    circle(width/2, 100,100)
+  }
+
   action() {
     let chance = random(0,100);
+    this.lightOn();
     this.display();
-    this.move();
-    if(chance >= 99 && this.speed >= 0.6){
-      this.speedDown();
+    if(light === false){
+      this.move();
+    }
+    //chance to for each car to speed up and slow down
+    if(chance >= 99 && this.speed >= 0.6){ 
+      this.speedDown();// cant slow down into negatives
     }
     else if(chance <= 1){
       this.speedUp();
     }
-    else if(chance >= 49 && chance <= 50){
+    else if(chance >= 49 && chance <= 50 && light === false){
       this.changeColor();
     }
   }
